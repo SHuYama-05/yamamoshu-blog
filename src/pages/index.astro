@@ -1,49 +1,128 @@
 ---
+import { getCollection } from 'astro:content';
 import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
+import FormattedDate from '../components/FormattedDate.astro';
 import Header from '../components/Header.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+
+const posts = (await getCollection('blog'))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 5);
 ---
 
 <!doctype html>
-<html lang="en">
-	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-	</head>
-	<body>
-		<Header />
-		<main>
-			<h1>🧑‍🚀 Hello, Astronaut!</h1>
-			<p>
-				Welcome to the official <a href="https://astro.build/">Astro</a> blog starter template. This template
-				serves as a lightweight, minimally-styled starting point for anyone looking to build a personal
-				website, blog, or portfolio with Astro.
-			</p>
-			<p>
-				This template comes with a few integrations already configured in your
-				<code>astro.config.mjs</code> file. You can customize your setup with
-				<a href="https://astro.build/integrations">Astro Integrations</a> to add tools like Tailwind,
-				React, or Vue to your project.
-			</p>
-			<p>Here are a few ideas on how to get started with the template:</p>
-			<ul>
-				<li>Edit this page in <code>src/pages/index.astro</code></li>
-				<li>Edit the site header items in <code>src/components/Header.astro</code></li>
-				<li>Add your name to the footer in <code>src/components/Footer.astro</code></li>
-				<li>Check out the included blog posts in <code>src/content/blog/</code></li>
-				<li>Customize the blog post page layout in <code>src/layouts/BlogPost.astro</code></li>
-			</ul>
-			<p>
-				Have fun! If you get stuck, remember to
-				<a href="https://docs.astro.build/">read the docs</a>
-				or <a href="https://astro.build/chat">join us on Discord</a> to ask questions.
-			</p>
-			<p>
-				Looking for a blog template with a bit more personality? Check out
-				<a href="https://github.com/Charca/astro-blog-template">astro-blog-template</a>
-				by <a href="https://twitter.com/Charca">Maxi Ferreira</a>.
-			</p>
-		</main>
-		<Footer />
-	</body>
+<html lang="ja">
+  <head>
+    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+    <style>
+      .hero {
+        padding: 3rem 0 2rem;
+        border-bottom: 1px solid rgb(var(--gray-light));
+        margin-bottom: 2rem;
+      }
+      .hero h1 {
+        font-size: 2rem;
+        margin: 0 0 0.5rem;
+      }
+      .hero p {
+        color: rgb(var(--gray));
+        font-size: 1.1rem;
+        margin: 0 0 1.5rem;
+      }
+      .tags {
+        display: flex;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+      }
+      .tag {
+        background: rgb(var(--gray-light));
+        border-radius: 4px;
+        padding: 0.2rem 0.7rem;
+        font-size: 0.85rem;
+        color: rgb(var(--gray-dark));
+      }
+      .section-title {
+        font-size: 1.2rem;
+        font-weight: 700;
+        margin: 2rem 0 1rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 2px solid rgb(var(--accent));
+        color: rgb(var(--accent));
+      }
+      .post-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      .post-list li {
+        border-bottom: 1px solid rgb(var(--gray-light));
+        padding: 1rem 0;
+      }
+      .post-list li:last-child {
+        border-bottom: none;
+      }
+      .post-list a {
+        text-decoration: none;
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        gap: 1rem;
+      }
+      .post-list a:hover .post-title {
+        color: rgb(var(--accent));
+      }
+      .post-title {
+        font-weight: 600;
+        font-size: 1rem;
+        color: rgb(var(--black));
+        transition: color 0.2s;
+      }
+      .post-date {
+        font-size: 0.85rem;
+        color: rgb(var(--gray));
+        white-space: nowrap;
+      }
+      .view-all {
+        display: inline-block;
+        margin-top: 1rem;
+        color: rgb(var(--accent));
+        text-decoration: none;
+        font-size: 0.9rem;
+      }
+      .view-all:hover {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <Header />
+    <main>
+      <div class="hero">
+        <h1>やまもしゅ（Shuta Yamamoto）</h1>
+        <p>ROS2・LLM・ロボット開発の技術ブログ。研究・実装・つまずきポイントを発信します。</p>
+        <div class="tags">
+          <span class="tag">ROS2</span>
+          <span class="tag">LLM</span>
+          <span class="tag">ロボット</span>
+          <span class="tag">Python</span>
+          <span class="tag">機械学習</span>
+        </div>
+      </div>
+
+      <p class="section-title">最新記事</p>
+      <ul class="post-list">
+        {posts.map(post => (
+          <li>
+            <a href={`/blog/${post.id}/`}>
+              <span class="post-title">{post.data.title}</span>
+              <span class="post-date"><FormattedDate date={post.data.pubDate} /></span>
+            </a>
+          </li>
+        ))}
+      </ul>
+      <a class="view-all" href="/blog/">すべての記事を見る →</a>
+    </main>
+    <Footer />
+  </body>
 </html>
