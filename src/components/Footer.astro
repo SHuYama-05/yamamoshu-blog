@@ -4,6 +4,11 @@ const today = new Date();
 
 <footer>
 	&copy; {today.getFullYear()} yamamoshu. All rights reserved.
+	<div class="policy-links">
+		<a href="/privacy/">プライバシーポリシー</a>
+		<span>|</span>
+		<a href="/contact/">お問い合わせ</a>
+	</div>
 	<div class="social-links">
 		<a href="https://m.webtoo.ls/@astro" target="_blank">
 			<span class="sr-only">Follow Astro on Mastodon</span>
@@ -58,5 +63,22 @@ const today = new Date();
 	}
 	.social-links a:hover {
 		color: rgb(var(--gray-dark));
+	}
+	.policy-links {
+		margin-top: 0.75rem;
+		font-size: 0.85rem;
+		display: flex;
+		justify-content: center;
+		gap: 0.75rem;
+	}
+	.policy-links a {
+		color: rgb(var(--gray));
+		text-decoration: none;
+	}
+	.policy-links a:hover {
+		text-decoration: underline;
+	}
+	.policy-links span {
+		color: rgb(var(--gray));
 	}
 </style>

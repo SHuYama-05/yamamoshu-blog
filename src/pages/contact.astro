@@ -1,0 +1,71 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<!doctype html>
+<html lang="ja">
+  <head>
+    <BaseHead
+      title="お問い合わせ | yamamoshu.com"
+      description="yamamoshu.comへのお問い合わせページです。"
+    />
+    <style>
+      main {
+        max-width: 720px;
+        margin: 0 auto;
+        padding: 2rem 1rem 4rem;
+      }
+      h1 {
+        font-size: 1.8rem;
+        margin-bottom: 1rem;
+      }
+      p {
+        line-height: 1.8;
+        color: rgb(var(--gray-dark));
+        margin-bottom: 1rem;
+      }
+      .contact-box {
+        margin-top: 2rem;
+        padding: 1.5rem;
+        background: rgb(var(--gray-light));
+        border-radius: 8px;
+      }
+      .contact-box p {
+        margin: 0 0 0.5rem;
+      }
+      .contact-box a {
+        color: rgb(var(--accent));
+        word-break: break-all;
+      }
+      .note {
+        margin-top: 2rem;
+        font-size: 0.9rem;
+        color: rgb(var(--gray));
+      }
+    </style>
+  </head>
+  <body>
+    <Header />
+    <main>
+      <h1>お問い合わせ</h1>
+      <p>当サイトへのお問い合わせは、以下の方法でお気軽にどうぞ。</p>
+      <p>記事の内容に関するご質問、誤りのご指摘、コラボレーションのご提案などお待ちしています。</p>
+
+      <div class="contact-box">
+        <p><strong>GitHub</strong></p>
+        <p><a href="https://github.com/SHuYama-05" target="_blank" rel="noopener">github.com/SHuYama-05</a></p>
+        <p style="font-size: 0.9rem; color: rgb(var(--gray)); margin-top: 0.5rem;">
+          GitHubのIssueやDiscussionからもお問い合わせいただけます。
+        </p>
+      </div>
+
+      <p class="note">
+        ※ スパムや勧誘・営業目的のお問い合わせにはお答えできません。<br>
+        ※ ご返信にお時間をいただく場合があります。
+      </p>
+    </main>
+    <Footer />
+  </body>
+</html>
